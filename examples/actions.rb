@@ -2,71 +2,36 @@ require 'bismuth'
 
 class ActionExample < Bi::Scene
 
-  CIRCLE_PNG = "circle.png"
-  INVADER_PNG = "invader.png"
-  VEHICLE_PNG = "vehicle.png"
-
   def initialize
     super
     add_timer(1000){ Bi::Window.title = "FPS:#{Bi::RunLoop.fps}" }
 
-    @circle =  Bi::Sprite.new(CIRCLE_PNG)
-    add_child @circle
+    @invaders = 8.times.map{|x|
+      i = Bi::Sprite.new("invader_white.png")
+      i.x = 16 + x*32
+      i.y = 120
+      i.angle = 90
+      i.anchor_x = i.anchor_y = 0.5
+      add_child i
+      i
+    }
 
-    @invader =  Bi::Sprite.new(INVADER_PNG)
-    add_child @invader
-
-    @vehicle =  Bi::Sprite.new(VEHICLE_PNG)
-    add_child @vehicle
-
-    # invader moving
-    @invader.x, @invader.y = 100,200
-    actions = [
-      Bi::Action::move_to(1000,200,200),
-      Bi::Action::rotate_by(1000,360),
-      Bi::Action::move_to(1000,100,200),
-      Bi::Action::callback{|node| puts "invader callback #{Time.now}!" }
+    t = 5000 # 5sec
+    @actions = [
+      Bi::Action::move_to(t,20,20){|node| p [node,:move_to] },
+      Bi::Action::move_by(t,20,20){|node| p [node,:move_by] },
+      Bi::Action::rotate_by(t,360){|node| p [node,:rotate_by] },
+      Bi::Action::rotate_to(t,360){|node| p [node,:rotate_to] },
+      Bi::Action::fade_alpha_to(t,0){|node| p [node,:fade_alpha_to] },
+      Bi::Action::scale_to(t,2.0,2.0){|node| p [node,:scale_to] },
+      Bi::Action::remove(){|node| p [node,:remove] },
+      Bi::Action::wait(t){|node| p [node,:wait] },
     ]
-    seq = Bi::Action::sequence(actions)
-    rep = Bi::Action::repeat seq, 5
-    @invader.run_action rep
 
-    # vehicle moving forever
-    @vehicle.x, @vehicle.y = 100,20
-    actions = [
-      Bi::Action::move_to(100,100,24),
-      Bi::Action::move_to(100,100,20)
-    ]
-    rep = Bi::Action::repeat_forever Bi::Action::sequence(actions)
-    @vehicle.run_action rep
-
-    add_event_callback(:MOUSE_BUTTON){|button,state,x,y|
-      if state
-        p [:mouse_down]
-        action!
-      end
+    @actions.each_with_index{|a,i|
+      @invaders[i].run_action a
     }
   end
-
-  def action!
-    unless @circle.is_action_runnning?
-      actions = [
-        Bi::Action::callback{|node| p [:callback,:seq_start,Time.now] },
-        Bi::Action::move_to(1000, @circle.x, self.h/2 ),
-        Bi::Action::callback{|node| p [:callback,:delay_start,Time.now] },
-        Bi::Action::wait(1000),
-        Bi::Action::callback{|node| p [:callback,:delay_end,Time.now] },
-        Bi::Action::move_to(1000,@circle.x,@circle.y),
-        Bi::Action::callback{|node| p [:callback,:seq_end,Time.now] },
-      ]
-      seq = Bi::Action::sequence(actions)
-      @circle.run_action seq
-
-      return true
-    end
-    return false
-  end
-
 end
 
 Bi::System.init
