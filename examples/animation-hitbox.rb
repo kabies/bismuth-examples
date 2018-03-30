@@ -10,6 +10,7 @@ class AnimationExample < Bi::Scene
     sprite = reader.default
     hitbox_node = Bi::Node.new
     animations = reader.read() {|frame|
+      hitbox_node.remove_all_children
       frame.hitbox.each{|name,hitbox|
         hitbox.boxes.each{|box| hitbox_node.add_child box }
       }
