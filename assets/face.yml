@@ -1,0 +1,12 @@
+default: face/face01.png
+animations:
+  blink:
+    interval: 50
+    frames:
+      - sprite: face/face01.png
+        hitbox: [ [0,0,20,20], [30,0,20,20] ]
+        hurtbox: [ [30,0,20,20], [60,0,20,20] ]
+        unit: 30
+      - sprite: face/face02.png
+      - sprite: face/face03.png
+      - sprite: face/face02.png
