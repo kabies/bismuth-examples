@@ -22,6 +22,6 @@ class AnimationExample < Bi::Scene
 
 end
 
-Bi::System.init(fps:60)
+Bi::System.init(fps:60,debug:true)
 Bi::Window.make_window(320,240)
 Bi::RunLoop.instance.run_with_scene AnimationExample.new

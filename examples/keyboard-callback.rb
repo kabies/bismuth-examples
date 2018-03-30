@@ -17,6 +17,6 @@ class KeyboardCallbackExample < Bi::Scene
   end
 end
 
-Bi::System.init font:"NotoMono-Regular.ttf"
+Bi::System.init font:"NotoMono-Regular.ttf",debug:true
 Bi::Window.make_window(320,240)
 Bi::RunLoop.instance.run_with_scene KeyboardCallbackExample.new

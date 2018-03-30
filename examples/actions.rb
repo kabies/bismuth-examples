@@ -34,6 +34,6 @@ class ActionExample < Bi::Scene
   end
 end
 
-Bi::System.init
+Bi::System.init(debug:true)
 Bi::Window.make_window(320,240)
 Bi::RunLoop.instance.run_with_scene ActionExample.new

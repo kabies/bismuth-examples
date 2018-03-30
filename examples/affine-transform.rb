@@ -93,6 +93,6 @@ class AffineTransformExample < Bi::Scene
 
 end
 
-Bi::System.init(fps:120, font:"NotoMono-Regular.ttf")
+Bi::System.init(fps:120, font:"NotoMono-Regular.ttf", debug:true)
 Bi::Window.make_window(640,480)
 Bi::RunLoop.instance.run_with_scene AffineTransformExample.new

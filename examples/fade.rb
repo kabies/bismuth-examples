@@ -2,15 +2,12 @@ require 'bismuth'
 
 class FadeExample < Bi::Scene
 
-  SKY_PNG = "sky.png"
-  SKY_RED_PNG = "sky_red.png"
-
   def initialize
     super
     add_timer(1000){ Bi::Window.title = "Fade / FPS:#{Bi::RunLoop.fps}" }
 
-    @bg_blue = Bi::Sprite.new(SKY_PNG)
-    @bg_red = Bi::Sprite.new(SKY_RED_PNG)
+    @bg_blue = Bi::Sprite.new("sky.png")
+    @bg_red = Bi::Sprite.new("sky_red.png")
     @bg_blue.alpha = 0
     @bg_red.alpha = 0xff
     add_child @bg_blue
@@ -40,6 +37,6 @@ class FadeExample < Bi::Scene
 
 end
 
-Bi::System.init(fps:60)
+Bi::System.init(fps:60,debug:true)
 Bi::Window.make_window(640,480)
 Bi::RunLoop.instance.run_with_scene FadeExample.new
