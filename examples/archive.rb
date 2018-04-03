@@ -6,19 +6,31 @@ class ArchiveExample < Bi::Scene
     super
     add_timer(1000){ Bi::Window.set_title("#{self.class.to_s} #{Bi::RunLoop.fps}FPS") }
 
-    sprite = Bi::Sprite.new "face/face01.png"
+    # sprite
+    bg = Bi::Sprite.new "sky.png"
+    bg.scale_x = bg.scale_y = 0.5
+    add_child bg
 
+    # animation
+    reader = Bi::AnimationYAMLReader.new "face.yml"
+    sprite = reader.default
     sprite.anchor_x = sprite.anchor_y = 0.5
     sprite.x = self.w/2
     sprite.y = self.h/2
     add_child sprite
+    animations = reader.read()
+    tmp = animations.first
+    animate = Bi::Action::animate(tmp.frames, tmp.interval){|node| p [node,:animate]}
+    sprite.run_action Bi::Action.repeat_forever animate
 
+    # font
     text = Bi::TextSprite.new "Archive Example", font:"NotoMono-Regular.ttf", size:18
     add_child text
 
-    bgm = Bi::Sound.new "bgm.wav"
-    bgm.play loop:true
+    # Music
+    Bi::Music.play "bgm.wav"
 
+    # SE
     sound = Bi::Sound.new "shot.wav"
     add_event_callback(:MOUSE_BUTTON) {|button,press,x,y|
       sound.play if press
