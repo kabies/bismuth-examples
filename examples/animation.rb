@@ -16,7 +16,7 @@ class AnimationExample < Bi::Scene
     add_child sprite
 
     tmp = animations.first
-    animate = Bi::Action::animate tmp.frames, tmp.interval
+    animate = Bi::Action::animate(tmp.frames, tmp.interval){|node| p [node,:animate]}
     sprite.run_action Bi::Action.repeat_forever animate
   end
 
