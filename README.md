@@ -7,14 +7,19 @@ to run these examples, you need to setup bismuth and bismuth-tools.
 
 after done setups bismuth and bismuth-tools, you can run examples like: `bismuth.rb examples/rainbow.rb`
 
-# licenses
+# Setup
 
-example codes are distributed under the unlicense: <http://unlicense.org>
+1. clone [bismuth-tools](https://github.com/kabies/bismuth-tools) and [bismuth](https://github.com/kabies/bismuth)
+2. build mruby in bismuth-tools directory
+3. create configuration file `.env` in bismuth-example directory
 
-see licenses directory about licenses of assets.
+`.env` file require `BISMUTH_LOAD_PATH`. for example:
 
+```
+BISMUTH_LOAD_PATH=/path/to/bismuth
+```
 
-# screenshots
+# Screenshots
 
 ## actions, actions-composite, animation
 ![actions](docs/actions.png)
@@ -27,6 +32,12 @@ see licenses directory about licenses of assets.
 ## menu
 ![menu](docs/menu.png)
 
+## game of life
+![game_of_life](docs/game_of_life.png)
+
+## cave generator
+![cave_generator](docs/cave_generator.png)
+
 ## pong
 ![pong](docs/pong.png)
 
@@ -38,3 +49,9 @@ see licenses directory about licenses of assets.
 
 ## shooting
 ![shooting](docs/shooting.png)
+
+# Licenses
+
+example codes are distributed under the unlicense: <http://unlicense.org>
+
+see licenses directory about licenses of assets.
